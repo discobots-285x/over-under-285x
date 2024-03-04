@@ -128,9 +128,6 @@ void pre_auton(void) {
         Brain.Screen.printAt(50, 50, "Near Side");
         break;
       case 3:
-        Brain.Screen.printAt(50, 50, "Far Side Elims");
-        break;
-      case 4:
         Brain.Screen.printAt(50, 50, "Near Side Elims");
         break;
     }
@@ -148,7 +145,7 @@ void autonomous(void) {
   auto_started = true;
   switch(current_auton_selection){  
     case 0:
-      far_side(); //This is the default auton, if you don't select from the brain.
+      safe_auton(); //This is the default auton, if you don't select from the brain.
       break;        //Change these to be your own auton functions in order to use the auton selector.
     case 1:         //Tap the screen to cycle through autons.
       far_side();
@@ -157,9 +154,6 @@ void autonomous(void) {
       near_side();
       break;
     case 3:
-      far_side_elims();
-      break;
-    case 4:
       near_side_elims();
       break;
  }
@@ -205,12 +199,12 @@ void usercontrol(void) {
     }
 
     if (cataToggle){
-      cata1.spin(forward, 12, volt);
+      cata1.spin(forward, 10, volt);
     } else {
       cata1.stop();
     }
 
-    if (Controller1.ButtonL2.pressing()) {
+    if (Controller1.ButtonA.pressing()) {
       if(!cataLatch){ //flip the toggle one time and set the latch
         cataToggle = !cataToggle;
         cataLatch = true;
@@ -225,7 +219,7 @@ void usercontrol(void) {
       backWings.set(false);
     }
 
-    if (Controller1.ButtonA.pressing()) {
+    if (Controller1.ButtonL1.pressing()) {
       if(!backWingsLatch){ //flip the toggle one time and set the latch
         backWingsToggle = !backWingsToggle;
         backWingsLatch = true;
@@ -242,7 +236,7 @@ void usercontrol(void) {
       frontWings.set(false);
     }
 
-    if (Controller1.ButtonL1.pressing()) {
+    if (Controller1.ButtonL2.pressing()) {
       if(!frontWingsLatch){ //flip the toggle one time and set the latch
         frontWingsToggle = !frontWingsToggle;
         frontWingsLatch = true;

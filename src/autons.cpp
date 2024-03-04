@@ -1,3 +1,5 @@
+
+
 #include "vex.h"
 #include "path.h"
 
@@ -44,47 +46,58 @@ void far_side() {
   frontWings.set(false);
 
   //get to far middle triball, and push both in
-  intake.spin(forward, 12, volt);
+  intake.spin(forward, 10, volt);
   chassis.drive_to_point(76, 65);
-  chassis.turn_to_point(115, 63);
+  chassis.turn_to_point(112, 63);
   frontWings.set(true);
   intake.spin(reverse, 12, volt);
   wait(150, msec);
-  chassis.drive_to_point(115, 63);
+  chassis.drive_to_point(112, 63);
   frontWings.set(false);
 
   //get close triball and release it around the match load zone
   chassis.turn_to_point(83, 49);
   intake.spin(forward, 12, volt);
   chassis.drive_to_point(83, 49);
-  chassis.turn_to_point(118, 30);
-  chassis.drive_to_point(120, 27);
-  intake.spin(reverse, 12, volt);
-  wait(250, msec);
-
-  //get to horizontal bar triball and intake it
-  chassis.turn_to_point(100, 12);
-  chassis.drive_distance(18);
-  intake.spin(forward, 12, volt);
-  chassis.drive_to_point(76, 10);
-
-  //get match load triball out and push all in
-  chassis.drive_to_point(114, 24);
+  chassis.turn_to_point(124.5, 24);
+  intake.stop();
+  chassis.drive_to_point(124.5, 24);
   chassis.turn_to_angle(55);
   intake.spin(reverse, 12, volt);
-  chassis.drive_to_point(125.5, 49);
-}
 
-void far_side_elims() {
-  odom_constants();
-}
+  //free the match load bar triball
+  backWings.set(true);
+  wait(750, msec);
+  chassis.turn_to_angle(-30, 12);
+  intake.spin(reverse, 12, volt);
+  chassis.drive_distance(4);
+  backWings.set(false);
+  intake.stop();
+  wait(250, msec);
+  chassis.turn_to_angle(-125);
 
+  //push all in
+  chassis.drive_to_point(132, 42, 12, 12);
+  chassis.drive_distance(5);
+}
 
 void near_side() {
   odom_constants();
   chassis.set_coordinates(23.5, 12, 135);
+  chassis.drive_to_point(12, 42);
+  intake.spin(reverse, 12, volt);
+  chassis.drive_to_point(25, 14);
+  intake.stop();
+  chassis.turn_to_angle(135);
   backWings.set(true);
-  chassis.turn_to_angle(45);
+  wait(250, msec);
+  chassis.turn_to_angle(35, 8);
+  backWings.set(false);
+  wait(500, msec);
+  chassis.turn_to_angle(-70);
+  chassis.drive_distance(-24);
+  chassis.turn_to_angle(-90);
+  chassis.drive_distance(-15);
 }
 
 void near_side_elims(){
@@ -121,7 +134,48 @@ void near_side_elims(){
 }
 
 void skills_auton() {
+  //push preloads into goal
   odom_constants();
+  chassis.set_coordinates(23,12,135);
+  chassis.drive_to_point(10, 42);
+
+  //get to bar and match load
+  chassis.drive_to_point(7, 22);
+  chassis.turn_to_angle(250);
+  frontWings.set(true);
+  cata1.spin(forward, 10, volt);
+  wait(60, seconds);
+  cata1.stop();
+
+/*
+  //wedge shit over
+  chassis.drive_to_point(57, 38);
+  chassis.drive_to_point(57, 99);
+  chassis.left_swing_to_angle(90);
+  chassis.drive_distance(2);
+
+  //get to other side
+  frontWings.set(false);
+  chassis.turn_to_point(17, 110);
+  chassis.drive_to_point(17, 110);
+  chassis.turn_to_angle(0);
+  chassis.turn_to_point(44, 128);
+  chassis.drive_distance(50);
+
+  //push into left side of goal
+  frontWings.set(true);
+  intake.spin(reverse, 12, volt);
+  chassis.drive_to_point(131, 95);
+  frontWings.set(false);
+
+  //push into goal front
+  backWings.set(true);
+  chassis.drive_to_point(94, 102.5);
+  chassis.left_swing_to_angle(0);
+  chassis.drive_distance(36);
+  chassis.left_swing_to_angle(-90);
+  chassis.drive_distance(36,-90, 12, 12);
+  */
 }
 
 
@@ -160,7 +214,7 @@ void odom_test(){
   MR.setBrake(coast);
   BR.setBrake(coast);
 
-  chassis.set_coordinates(0, 0, 0);
+  chassis.set_coordinates(115, 12, 0);
   while(1){
     Brain.Screen.clearScreen();
     Brain.Screen.printAt(0,50, "X: %f", chassis.get_X_position());
