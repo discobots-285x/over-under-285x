@@ -9,19 +9,19 @@ First things first, you gotta access the code! Do the usual - create a folder an
 
 ## Breakdown of the code
 
-# /src/main.cpp
+### /src/main.cpp
 
 Despite the name of the file being "main", this is probably the file you'll change the least. This file contains the code to setup and initialize the drivetrain and odometry system as well as the autonomous selection code.
 
-# /src/robot-config.cpp
+### /src/robot-config.cpp
 
 This file contains the code that configures the motors and sensors hooked up to the brain of the bot as well as the control scheme for the different motors and subsystems. I would suggest deleting the code above the function vexcodeInit(), and then using the built in device configuration tool in VEXcode to set up motors and sensors, and then hand-code the controller functions for your individual subsystems. You do NOT need to code in drivetrain controls, the drivetrain initialization in main.cpp takes care of that.
 
-# /src/autons.cpp
+### /src/autons.cpp
 
 Pretty straightforward - it literally holds the code for your different autons. Code whatever you need and put it here. Note: make sure that when you make new autons here, you reflect those changes in main.cpp in the auton selection code, otherwise you won't be able to actually use that code in match, which is not ideal!
 
-# /src/drive
+### /src/drive
 
 There is almost no scenario in which you change anything in here - this is all the boilerplate code and setup for the odometry position tracking systems and the functions to help you with autonomous coding. Check these files if you want to get a better understanding of odometry code or if you need to see the inner workings of the drive functions for autonomous coding!
 
